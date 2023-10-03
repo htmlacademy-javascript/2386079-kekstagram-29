@@ -1,7 +1,7 @@
 const checkLineLength = function(string, maxLength) {
   return (string.length <= maxLength);
 };
-checkLineLength('проверяемая строка', 20);
+checkLineLength('проверяемая строка', 10);
 const checkIfPalindrom = function (string) {
   const newString = string.replaceAll(' ', '').toLowerCase();
   let emptyString = '';
