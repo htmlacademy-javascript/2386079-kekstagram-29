@@ -10,5 +10,5 @@ const checkIfPalindrom = function (string) {
   }
   return (newString === emptyString);
 };
-checkIfPalindrom('топот');
+checkIfPalindrom('hello');
 
