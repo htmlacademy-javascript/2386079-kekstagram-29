@@ -1,14 +1,12 @@
-const checkLineLength = function(string, maxLength) {
-  return (string.length <= maxLength);
-};
-checkLineLength('проверяемая строка', 10);
-const checkIfPalindrom = function (string) {
-  const newString = string.replaceAll(' ', '').toLowerCase();
-  let emptyString = '';
+const checkStringLength = (string, maxLength) => string.length <= maxLength;
+const checkPalindrom = (string) => {
+  const formattedString = string.replaceAll(' ', '').toLowerCase();
+  let reversedString = '';
   for (let i = string.length - 1; i >= 0; i--) {
-    emptyString += newString[i];
+    reversedString += formattedString[i];
   }
-  return (newString === emptyString);
+  return (formattedString === reversedString);
 };
-checkIfPalindrom('hello');
+checkStringLength('проверяемая строка', 10);
+checkPalindrom('hello');
 
