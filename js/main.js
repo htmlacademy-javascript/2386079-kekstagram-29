@@ -60,4 +60,7 @@ const createObject = () => ({
   comments: comments,
 });
 
-createObject();
+const objects = Array.from({length: 25}, createObject);
+
+// eslint-disable-next-line no-console
+console.log(objects);
