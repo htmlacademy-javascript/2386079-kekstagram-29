@@ -20,27 +20,13 @@ const getRandomInteger = (a, b) => {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
-const createRandomIdFromRange = (min, max) => {
-  const previousValues = [];
-  return function () {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 const createComments = () => {
-  const messages = Array.from({length: getRandomInteger(1, 2)}, () => getRandomArrayElement(MESSAGES)).join(' ');
+  const message = Array.from({length: getRandomInteger(1, 2)}, () => getRandomArrayElement(MESSAGES)).join(' ');
   return {
-    id: createRandomIdFromRange(1, 1000),
+    id: getRandomInteger(1, 1000),
     avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-    message: messages,
+    message: message,
     name: getRandomArrayElement(NAMES)
   };
 };
