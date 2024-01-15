@@ -20,7 +20,7 @@ const getRandomInteger = (a, b) => {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
-function createRandomIdFromRange (min, max) {
+const createRandomIdFromRange = (min, max) => {
   const previousValues = [];
   return function () {
     let currentValue = getRandomInteger(min, max);
@@ -33,24 +33,22 @@ function createRandomIdFromRange (min, max) {
     previousValues.push(currentValue);
     return currentValue;
   };
-}
+};
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-const createPhoto = () => {
-  const createComments = () => {
-    const messagesInComment = Array.from({length: getRandomInteger(1, 2)}, getRandomArrayElement(MESSAGES));
-    const message = messagesInComment.join(', ');
-    return {
-      id: createRandomIdFromRange(),
-      avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
-      message: message,
-      name: getRandomArrayElement(NAMES)
-    };
-  };
-  const comments = Array.from({length: getRandomInteger(0, 30)}, createComments);
-  const generatePhotoId = createRandomIdFromRange(1, 25);
+const createComments = () => {
+  const messages = Array.from({length: getRandomInteger(1, 2)}, () => getRandomArrayElement(MESSAGES)).join(' ');
   return {
-    id: generatePhotoId,
-    url: `photos/${getRandomInteger(1, 25)}.jpg`,
+    id: createRandomIdFromRange(1, 1000),
+    avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
+    message: messages,
+    name: getRandomArrayElement(NAMES)
+  };
+};
+const createPhoto = (id) => {
+  const comments = Array.from({length: getRandomInteger(0, 30)}, createComments);
+  return {
+    id: id,
+    url: `photos/${id}.jpg`,
     description: 'Фотография на память',
     likes: getRandomInteger(15, 200),
     comments: comments,
