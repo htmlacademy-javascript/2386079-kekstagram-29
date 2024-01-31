@@ -36,6 +36,6 @@ const createPhoto = (id) => {
     comments: comments,
   };
 };
-const photos = () => Array.from({length: PHOTOS_COUNT}, (item, index) => createPhoto(index + 1));
+const createPhotos = () => Array.from({length: PHOTOS_COUNT}, (item, index) => createPhoto(index + 1));
 
-export {photos};
+export {createPhotos};
