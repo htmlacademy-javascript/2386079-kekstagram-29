@@ -16,7 +16,6 @@ const NAMES = [
   'Людовик'
 ];
 const PHOTOS_COUNT = 25;
-
 const createComments = () => {
   const message = Array.from({length: getRandomInteger(1, 2)}, () => getRandomArrayElement(MESSAGES)).join(' ');
   return {
