@@ -16,7 +16,6 @@ const NAMES = [
   'Людовик'
 ];
 const PHOTOS_COUNT = 25;
-
 const createComments = () => {
   const message = Array.from({length: getRandomInteger(1, 2)}, () => getRandomArrayElement(MESSAGES)).join(' ');
   return {
@@ -36,6 +35,6 @@ const createPhoto = (id) => {
     comments: comments,
   };
 };
-const photos = () => Array.from({length: PHOTOS_COUNT}, (item, index) => createPhoto(index + 1));
+const createPhotos = () => Array.from({length: PHOTOS_COUNT}, (item, index) => createPhoto(index + 1));
 
-export {photos};
+export {createPhotos};
