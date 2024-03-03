@@ -1,19 +1,19 @@
-import {photos} from './main.js';
-
 const picturesContainer = document.querySelector('.pictures');
 const photoTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const renderPhotos = function () {
-  const picture = photoTemplate.cloneNode(true);
+const getPhotoElement = ({comments, description, likes, url}) => {
+  const photoElement = photoTemplate.cloneNode(true);
+  const imageElement = photoElement.querySelector('.picture__img');
+  imageElement.src = url;
+  imageElement.alt = description;
+  photoElement.querySelector('.picture__likes').textContent = likes;
+  photoElement.querySelector('.picture__comments').textContent = comments.length;
+  return photoElement;
+};
+const renderPhotos = (photos) => {
   const fragment = document.createDocumentFragment();
-  for (let i = 0; i < photos.length; i++) {
-    const pictureImage = picture.querySelector('.picture__img');
-    pictureImage.src = photos[i].url;
-    pictureImage.alt = photos[i].description;
-    const pictureLikes = picture.querySelector('.picture__likes');
-    pictureLikes.textContent = photos[i].likes;
-    const pictureComments = picture.querySelector('.picture__comments');
-    pictureComments.textContent = photos[i].comments.length;
-    fragment.append(picture);
+  for (const photo of photos) {
+    const photoElement = getPhotoElement(photo);
+    fragment.append(photoElement);
   }
   picturesContainer.append(fragment);
 };
