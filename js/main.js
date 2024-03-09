@@ -1,5 +1,9 @@
 import {createPhotos} from './data.js';
-import {renderPhotos} from './miniatures.js';
+import {renderThumbnails} from './thumbnails.js';
+import {renderGallery} from './thumbnails.js';
+
 const photos = createPhotos();
 
-renderPhotos(photos);
+renderThumbnails(photos);
+renderGallery(photos);
+
