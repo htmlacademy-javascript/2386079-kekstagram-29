@@ -1,7 +1,7 @@
 import {isEscapeKey} from './util.js';
 
 const MAX_HASHTAG_COUNT = 5;
-const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1-19}$/i;
+const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ErrorText = {
   INVALID_COUNT: `Максимум ${MAX_HASHTAG_COUNT} хештэгов`,
   NOT_UNIQUE: 'Хештэги повторяются',
@@ -14,16 +14,20 @@ const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
 const imgUploadCancel = imgUploadForm.querySelector('.img-upload__cancel');
 const hashtagField = imgUploadForm.querySelector('.text__hashtags');
 
+const pristine = new Pristine(imgUploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+});
 const openImgUploadForm = () => {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('.modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
-
 const closeImgUploadForm = () => {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('.modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  pristine.reset();
 };
 
 function onDocumentKeydown (evt){
@@ -40,14 +44,9 @@ imgUploadCancel.addEventListener('click', () => {
   closeImgUploadForm();
 });
 
-const pristine = new Pristine(imgUploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorTextParent: 'img-upload__field-wrapper',
-});
-
 const normalizeTags = (tagString) => tagString
   .trim()
-  .split (' ')
+  .split(' ')
   .filter((tag) => Boolean(tag.length));
 
 const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SYMBOLS.test(tag));
