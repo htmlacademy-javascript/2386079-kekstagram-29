@@ -45,7 +45,7 @@ const openBigPicture = (data) => {
 };
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
-  document.querySelector('body').classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
