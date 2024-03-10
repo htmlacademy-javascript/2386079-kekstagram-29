@@ -6,7 +6,7 @@ const likesCount = bigPicture.querySelector('.likes-count');
 const commentsCount = bigPicture.querySelector('.comments-count');
 const caption = bigPicture.querySelector('.social__caption');
 const commentList = bigPicture.querySelector('.social__comments');
-const commentTemplate = document.querySelector('#comment').content.querySelector('.comment');
+const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 
 const renderBigPicture = ({comments, url, likes, description}) => {
   bigPictureImage.src = url;
