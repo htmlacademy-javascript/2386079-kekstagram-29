@@ -1,4 +1,6 @@
 import {isEscapeKey} from './util.js';
+import {resetScale} from './image-scale.js';
+import {resetEffects} from './effects.js';
 
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -28,6 +30,8 @@ const closeImgUploadForm = () => {
   document.body.classList.remove('.modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   pristine.reset();
+  resetScale();
+  resetEffects();
 };
 
 function onDocumentKeydown (evt){
