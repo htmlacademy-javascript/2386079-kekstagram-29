@@ -1,11 +1,23 @@
-import {createPhotos} from './data.js';
 import {renderGallery} from './thumbnails.js';
-import './form.js';
-import './image-scale.js';
-import {setEffectSlider} from './effects.js';
+import {setOnFormSubmit, closeImgUploadForm} from './form.js';
+import {getData, sendData} from './api.js';
+import {showAlert} from './util.js';
+import {showSuccessMessage, showErrorMessage} from './message.js';
 
-const photos = createPhotos();
+setOnFormSubmit(async (data) => {
+  try {
+    await sendData(data);
+    closeImgUploadForm();
+    showSuccessMessage();
+  } catch {
+    showErrorMessage();
+  }
+});
 
-renderGallery(photos);
-setEffectSlider();
+try {
+  const data = await getData();
+  renderGallery(data);
+} catch(err) {
+  showAlert(err.message);
+}
 
