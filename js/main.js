@@ -3,6 +3,7 @@ import {setOnFormSubmit, closeImgUploadForm} from './form.js';
 import {getData, sendData} from './api.js';
 import {showAlert} from './util.js';
 import {showSuccessMessage, showErrorMessage} from './message.js';
+import {setEffectSlider} from './effects.js';
 
 setOnFormSubmit(async (data) => {
   try {
@@ -21,3 +22,4 @@ try {
   showAlert(err.message);
 }
 
+setEffectSlider();

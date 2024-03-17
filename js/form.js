@@ -15,7 +15,7 @@ const SubmitButtonText = {
   SUBMITTING: 'Отправляю...'
 };
 
-const imgUploadForm = document.querySelector('.img-upload');
+const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadInput = imgUploadForm.querySelector('.img-upload__input');
 const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
 const imgUploadCancel = imgUploadForm.querySelector('.img-upload__cancel');
