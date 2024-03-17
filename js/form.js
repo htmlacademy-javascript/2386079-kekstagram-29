@@ -10,11 +10,18 @@ const ErrorText = {
   INVALID_PATTERN: 'Неправильный хештэг'
 };
 
-const imgUploadForm = document.querySelector('.img-upload');
+const SubmitButtonText = {
+  INACTIVE: 'Опубликовать',
+  SUBMITTING: 'Отправляю...'
+};
+
+const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadInput = imgUploadForm.querySelector('.img-upload__input');
 const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
 const imgUploadCancel = imgUploadForm.querySelector('.img-upload__cancel');
 const hashtagField = imgUploadForm.querySelector('.text__hashtags');
+const commentField = imgUploadForm.querySelector('.text__description');
+const submitButton = imgUploadForm.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -34,12 +41,6 @@ const closeImgUploadForm = () => {
   resetEffects();
 };
 
-function onDocumentKeydown (evt){
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeImgUploadForm();
-  }
-}
 imgUploadInput.addEventListener('change', () => {
   openImgUploadForm();
 });
@@ -47,6 +48,12 @@ imgUploadInput.addEventListener('change', () => {
 imgUploadCancel.addEventListener('click', () => {
   closeImgUploadForm();
 });
+
+const toggleSubmitButton = (isDisabled) => {
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = isDisabled ? SubmitButtonText.SUBMITTING
+    : SubmitButtonText.INACTIVE;
+};
 
 const normalizeTags = (tagString) => tagString
   .trim()
@@ -68,3 +75,28 @@ imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   pristine.validate();
 });
+
+const isTextFieldFocused = () =>
+  document.activeElement === hashtagField || document.activeElement === commentField;
+const isErrorMessageShown = () => Boolean(document.querySelector('.error'));
+
+const setOnFormSubmit = (callback) => {
+  imgUploadForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      toggleSubmitButton(true);
+      await callback(new FormData(imgUploadForm));
+      toggleSubmitButton();
+    }
+  });
+};
+
+function onDocumentKeydown (evt){
+  if (isEscapeKey(evt) && !isTextFieldFocused() && !isErrorMessageShown()) {
+    evt.preventDefault();
+    closeImgUploadForm();
+  }
+}
+
+export {closeImgUploadForm, setOnFormSubmit};
