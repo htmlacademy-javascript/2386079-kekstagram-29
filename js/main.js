@@ -1,9 +1,10 @@
 import {renderGallery} from './thumbnails.js';
 import {setOnFormSubmit, closeImgUploadForm} from './form.js';
 import {getData, sendData} from './api.js';
-import {showAlert} from './util.js';
+import {debounce, showAlert} from './util.js';
 import {showSuccessMessage, showErrorMessage} from './message.js';
 import {setEffectSlider} from './effects.js';
+import {init, getSortedPictures} from './sorting.js';
 
 setOnFormSubmit(async (data) => {
   try {
@@ -17,7 +18,9 @@ setOnFormSubmit(async (data) => {
 
 try {
   const data = await getData();
-  renderGallery(data);
+  const debouncedRenderGallery = debounce(renderGallery());
+  init(data, debouncedRenderGallery());
+  renderGallery(getSortedPictures());
 } catch(err) {
   showAlert(err.message);
 }

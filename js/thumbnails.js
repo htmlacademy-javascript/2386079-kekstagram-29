@@ -13,13 +13,14 @@ const getThumbnail = ({comments, description, likes, url, id}) => {
 
   return thumbnail;
 };
-const renderThumbnails = (photos) => {
+const renderThumbnails = (photos, container) => {
+  container.querySelectorAll('.picture').forEach((element) => element.remove);
   const fragment = document.createDocumentFragment();
   for (const photo of photos) {
     const thumbnail = getThumbnail(photo);
     fragment.append(thumbnail);
   }
-  picturesContainer.append(fragment);
+  container.append(fragment);
 };
 
 const closeBigPictureButton = document.querySelector('.big-picture__cancel');
@@ -27,19 +28,23 @@ closeBigPictureButton.addEventListener('click', () => {
   closeBigPicture();
 });
 
-const renderGallery = (pictures) => {
-  picturesContainer.addEventListener('click', (evt) => {
-    const thumbnail = evt.target.closest('[data-thumbnail-id]');
-    if (!thumbnail) {
-      return;
-    }
-    evt.preventDefault();
-    const picture = pictures.find(
-      (item) => item.id === +thumbnail.dataset.thumbnailId
-    );
-    openBigPicture(picture);
-  });
+let pictures = [];
+const onContainerClick = (evt) => {
+  const thumbnail = evt.target.closest('[data-thumbnail-id]');
+  if (!thumbnail) {
+    return;
+  }
+  evt.preventDefault();
+  const picture = pictures.find(
+    (item) => item.id === +thumbnail.dataset.thumbnailId
+  );
+  openBigPicture(picture);
+};
+
+const renderGallery = (currentPictures) => {
+  pictures = currentPictures;
   renderThumbnails(pictures, picturesContainer);
+  picturesContainer.addEventListener('click', onContainerClick);
 };
 
 export {renderThumbnails, renderGallery};
