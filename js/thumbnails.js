@@ -14,7 +14,7 @@ const getThumbnail = ({comments, description, likes, url, id}) => {
   return thumbnail;
 };
 const renderThumbnails = (photos, container) => {
-  container.querySelectorAll('.picture').forEach((element) => element.remove);
+  container.querySelectorAll('.picture').forEach((element) => element.remove());
   const fragment = document.createDocumentFragment();
   for (const photo of photos) {
     const thumbnail = getThumbnail(photo);

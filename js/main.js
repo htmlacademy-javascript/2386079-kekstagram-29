@@ -18,8 +18,8 @@ setOnFormSubmit(async (data) => {
 
 try {
   const data = await getData();
-  const debouncedRenderGallery = debounce(renderGallery());
-  init(data, debouncedRenderGallery());
+  const debouncedRenderGallery = debounce(renderGallery);
+  init(data, debouncedRenderGallery);
   renderGallery(getSortedPictures());
 } catch(err) {
   showAlert(err.message);
