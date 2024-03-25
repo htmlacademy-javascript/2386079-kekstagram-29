@@ -2,6 +2,7 @@ import {isEscapeKey} from './util.js';
 import {resetScale} from './image-scale.js';
 import {resetEffects} from './effects.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ErrorText = {
@@ -22,6 +23,8 @@ const imgUploadCancel = imgUploadForm.querySelector('.img-upload__cancel');
 const hashtagField = imgUploadForm.querySelector('.text__hashtags');
 const commentField = imgUploadForm.querySelector('.text__description');
 const submitButton = imgUploadForm.querySelector('.img-upload__submit');
+const photoPreview = imgUploadForm.querySelector('.img-upload__preview img');
+const effectsPreviews = imgUploadForm.querySelectorAll('.effects__preview');
 
 const pristine = new Pristine(imgUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -79,6 +82,26 @@ imgUploadForm.addEventListener('submit', (evt) => {
 const isTextFieldFocused = () =>
   document.activeElement === hashtagField || document.activeElement === commentField;
 const isErrorMessageShown = () => Boolean(document.querySelector('.error'));
+
+const isValidType = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
+};
+
+const onFileInputChange = () => {
+  const file = imgUploadInput.files[0];
+  if (file && isValidType(file)) {
+    photoPreview.src = URL.createObjectURL(file);
+    effectsPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url('${photoPreview.src}')`;
+    });
+  }
+  openImgUploadForm();
+};
+
+imgUploadInput.addEventListener('change', () => {
+  onFileInputChange();
+});
 
 const setOnFormSubmit = (callback) => {
   imgUploadForm.addEventListener('submit', async (evt) => {
