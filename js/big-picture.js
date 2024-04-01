@@ -29,7 +29,7 @@ const renderComments = () => {
     commentsLoader.classList.add('hidden');
     commentsShown = comments.length;
   } else {
-    commentsShown.classList.remove('hidden');
+    commentsLoader.classList.remove('hidden');
   }
   const fragment = document.createDocumentFragment();
   for (let i = 0; i < commentsShown; i++) {
