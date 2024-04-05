@@ -32,14 +32,15 @@ const pristine = new Pristine(imgUploadForm, {
 });
 const openImgUploadForm = () => {
   imgUploadOverlay.classList.remove('hidden');
-  document.body.classList.add('.modal-open');
+  document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 };
 const closeImgUploadForm = () => {
   imgUploadOverlay.classList.add('hidden');
-  document.body.classList.remove('.modal-open');
+  document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   pristine.reset();
+  imgUploadForm.reset();
   resetScale();
   resetEffects();
 };
