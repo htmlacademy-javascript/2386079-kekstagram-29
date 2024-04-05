@@ -17,6 +17,7 @@ setOnFormSubmit(async (data) => {
 });
 
 try {
+  setEffectSlider();
   const data = await getData();
   const debouncedRenderGallery = debounce(renderGallery);
   init(data, debouncedRenderGallery);
@@ -24,5 +25,3 @@ try {
 } catch(err) {
   showAlert(err.message);
 }
-
-setEffectSlider();
